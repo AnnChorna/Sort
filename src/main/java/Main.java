@@ -225,7 +225,7 @@ public class Main extends Application {
         });
 
 
-        primaryStage.setScene(new Scene(mainLayout, 700, 400));       // створення та встановлення сцени на головне вікно програми
+        primaryStage.setScene(new Scene(mainLayout, 700, 400));    
         primaryStage.show();
 
     }
@@ -241,9 +241,6 @@ public class Main extends Application {
                 }
             }
 
-        }
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i] + " ");
         }
         return array;
     }
