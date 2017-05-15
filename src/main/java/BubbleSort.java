@@ -1,40 +1,55 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class BubbleSort extends JPanel{
 
-    int[] height = new int[20];
-    int z = 0;
-    int i = 0;
+    Screen screen;
+    int[] array;
+    int num;
 
-    public BubbleSort(int[] height){
-        for(int i = 0; i < 20; i++){
-            this.height[i] = height[i];
-        }
-        bubbleSort();
+    public BubbleSort(int[] array){
+        this.array = array;
     }
 
-    private void bubbleSort() {
-        int t;
-        for (int i = 0; i < height.length; i++) {
-            for (int j = i + 1; j < height.length; j++) {
-                if (height[j] < height[i]) {
-                    t = height[j];
-                    height[j] = height[i];
-                    height[i] = t;
-                }
+    public void chcolor(int num){
+        this.num = num;
+    }
+
+    public void showRect(){
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800,650);
+        frame.setResizable(true);
+
+        screen = new Screen(array);
+        screen.color(num);
+        frame.add(screen);
+        frame.setVisible(true);
+
+        for(int i = 0; i < array.length; i++){
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            repaint();
 
+            int x = 0;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < array[i]) {
+                    x = array[j];
+                    array[j] = array[i];
+                    array[i] = x;
+                }
+                else {
+
+                }
+                screen.setHighlight(j,i);
+                screen.repaint();
+            }
         }
-    }
 
-    public void paint(Graphics graphics){
-        for(int i = 0; i < 20; i++){
-            graphics.fillRect(z+=5,600, 10, height[i]);
-            graphics.setColor(Color.BLACK);
-        }
+        frame.setVisible(true);
+        frame.dispose();
     }
-
 }
 

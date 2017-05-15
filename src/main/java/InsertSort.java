@@ -3,34 +3,48 @@ import java.awt.*;
 
 public class InsertSort extends JPanel {
 
-    int[] height = new int[20];
-    int z = 0;
+    Screen screen;
+    int[] array;
+    int num;
 
-    public InsertSort(int[] height){
-        for(int i = 0; i < 20; i++){
-            this.height[i] = height[i];
-        }
-        insertSort();
+    public InsertSort(int[] array){
+        this.array = array;
     }
 
-    public void insertSort(){
-        for(int j = 1; j < height.length; j++){
-            int key = height[j];
+    public void chcolor(int num){
+        this.num = num;
+    }
+
+    public void showRect(){
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800,650);
+        frame.setResizable(true);
+
+        screen = new Screen(array);
+        screen.color(num);
+        frame.add(screen);
+        frame.setVisible(true);
+
+
+        for(int j = 1; j < array.length; j++){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            int k = array[j];
             int i = j -1;
-            while ( i >= 0 && height[i] >key){
-                height[i+1] = height[i];
+            while ( i >= 0 && array[i] >k){
+                array[i+1] = array[i];
                 i--;
             }
-            height[i+1] = key;
-            repaint();
+            array[i+1] = k;
+            screen.setHighlight(j,i);
+            screen.repaint();
         }
-    }
 
-    public void paint(Graphics graphics){
-        for(int i = 0; i < 20; i++){
-            graphics.fillRect(z+=5,600, 10, height[i]);
-            graphics.setColor(Color.BLACK);
-        }
+        frame.setVisible(true);
+        frame.dispose();
     }
-
 }

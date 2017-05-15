@@ -3,39 +3,55 @@ import java.awt.*;
 
 public class ChoiceSort extends JPanel{
 
-    int[] height = new int[20];
-    int z = 0;
+    Screen screen;
+    int[] array;
+    int num;
 
-    public ChoiceSort(int[] height){
-        for(int i = 0; i < 20; i++){
-            this.height[i] = height[i];
-        }
-        choiceSort();
+    public ChoiceSort(int[] array){
+        this.array = array;
     }
 
-    public void choiceSort(){
-        for (int i = 0; i < height.length-1; i++)
-        {
+    public void chcolor(int num){
+        this.num = num;
+    }
+
+    public void showRect(){
+        final JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800,650);
+        frame.setResizable(true);
+
+        screen = new Screen(array);
+        screen.color(num);
+        frame.add(screen);
+        frame.setVisible(true);
+
+        int s = 0;
+        int i;
+        for (i = 0; i < array.length - 1; i++) {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+
             int index = i;
-            for (int j = i+1; j < height.length; j++)
-                if (height[j] < height[index]){
+            for (int j = i + 1; j < array.length; j++)
+                if (array[j] < array[index])
                     index = j;
-                }
-                else{
-                    int smallerNumber = height[index];
-                    height[index] = height[i];
-                    height[i] = smallerNumber;
-                }
-            repaint();
 
+            s = array[index];
+            array[index] = array[i];
+            array[i] = s;
+            screen.setHighlight(index,i);
+            screen.repaint();
         }
-    }
+        screen.setHighlight(s,i);
+        screen.repaint();
 
-    public void paint(Graphics graphics){
-        for(int i = 0; i < 20; i++){
-            graphics.fillRect(z+=5,600, 10, height[i]);
-            graphics.setColor(Color.BLACK);
-        }
+        frame.setVisible(true);
+        frame.dispose();
     }
 
 }

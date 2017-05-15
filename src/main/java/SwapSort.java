@@ -3,34 +3,52 @@ import java.awt.*;
 
 public class SwapSort extends JPanel {
 
-    int[] height = new int[20];
-    int z = 0;
+    Screen screen;
+    int[] array;
 
-    public SwapSort(int[] height){
-        for(int i = 0; i < 20; i++){
-            this.height[i] = height[i];
-        }
-        swapSort();
+    int num;
+
+    public SwapSort(int[] array){
+        this.array = array;
     }
 
-    public void swapSort() {
-        for (int p = 0; p < height.length; p++) {
-            for (int i = p + 1; i < height.length; i++) {
-                if (height[i] < height[p]) {
-                    height[p] = height[p] + height[i];
-                    height[i] = height[p] - height[i];
-                    height[p] = height[p] - height[i];
-                }
+    public void chcolor(int num){
+        this.num = num;
+    }
+
+    public void showRect(){
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800,650);
+        frame.setResizable(true);
+
+        screen = new Screen(array);
+        screen.color(num);
+        frame.add(screen);
+        frame.setVisible(true);
+
+        for (int p = 0; p < array.length; p++) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            repaint();
-        }
-    }
+            int i;
+            for (i = p + 1; i < array.length; i++) {
+                if (array[i] < array[p]) {
+                    array[p] = array[p] + array[i];
+                    array[i] = array[p] - array[i];
+                    array[p] = array[p] - array[i];
+                }
+                else {
 
-    public void paint(Graphics graphics){
-        for(int i = 0; i < 20; i++){
-            graphics.fillRect(z+=5,600, 10, height[i]);
-            graphics.setColor(Color.BLACK);
+                }
+                screen.setHighlight(i,p);
+            }
+            screen.repaint();
         }
-    }
 
+        frame.setVisible(true);
+        frame.dispose();
+    }
 }
